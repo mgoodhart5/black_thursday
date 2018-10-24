@@ -3,20 +3,20 @@ require_relative '../lib/item_repo'
 
 class ItemRepoTest < MiniTest::Test
   def test_it_exists
-    ir = ItemRepo.new
+    ir = ItemRepo.new('./test/item_sample.csv')
     assert_instance_of ItemRepo, ir
   end
 
   def test_it_starts_with_an_empty_array
-    ir = ItemRepo.new
-    assert_equal [], ir.all
+    ir = ItemRepo.new('./test/item_sample.csv')
+    assert_instance_of Array, ir.all
   end
 
-  def test_we_have_access_to_item_csv
-     item = CSV.open
-    assert_equal CSV, item.class
-  end
+  def test_that_it_can_create_item_instances
+    ir = ItemRepo.new('./test/item_sample.csv')
 
+    assert_equal 3, ir.all.count
+  end
 
 end
 

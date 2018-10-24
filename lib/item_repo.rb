@@ -1,11 +1,22 @@
-require 'csv'
-class ItemRepo
+require 'CSV'
+require_relative '../lib/item'
 
+
+class ItemRepo
   attr_reader :all
 
-  def initialize
+  def initialize(item_data)
     @all = []
-    item = CSV.open "./data/merchants.csv"
+    create_items(item_data)
   end
+
+  def create_items(item_data)
+    things = CSV.read(item_data, headers: true, header_converters: :symbol)
+    @all = things.map do |thing|
+      Item.new(thing)
+    end
+  end
+
+  
 
 end
