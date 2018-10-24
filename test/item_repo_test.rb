@@ -12,6 +12,12 @@ class ItemRepoTest < MiniTest::Test
     assert_equal [], ir.all
   end
 
+  def test_we_have_access_to_item_csv
+     item = CSV.open
+    assert_equal CSV, item.class
+  end
+
+
 end
 
 
