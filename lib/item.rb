@@ -19,7 +19,7 @@ class Item
   end
 
   def unit_price_to_dollars
-    @unit_price
+    @unit_price.to_f
     # we need to figure out how to ACTUALLY convert this properly
   end
 

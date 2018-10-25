@@ -23,6 +23,7 @@ class ItemRepoTest < MiniTest::Test
     id = 263395617
 
     assert_instance_of Item, ir.find_by_id(id)
+    # confirmed this test, but there is a better way to run it
   end
 
   def test_it_can_be_found_by_name
@@ -30,6 +31,7 @@ class ItemRepoTest < MiniTest::Test
     name = "510+ RealPush Icon Set"
 
     assert_instance_of Item, ir.find_by_name(name)
+    # confirmed this test
   end
 
   def test_it_can_find_all_with_description_or_returns_empty_array
@@ -39,6 +41,7 @@ class ItemRepoTest < MiniTest::Test
 
     assert_instance_of Array, ir.find_all_with_description(description_1)
     assert_equal [], ir.find_all_with_description(description_2)
+    # confirmed
   end
 
   def test_it_can_find_all_by_price_or_returns_empty_array
@@ -48,6 +51,7 @@ class ItemRepoTest < MiniTest::Test
     #this is a test in progress...refactoring unit price method
     assert_equal [], ir.find_all_by_price(price_1)
     assert_instance_of Array, ir.find_all_by_price(price_2)
+    binding.pry
   end
 
   def test_it_can_find_all_in_price_range
@@ -56,10 +60,10 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_by_merchant_id
     ir = ItemRepo.new('./test/item_sample.csv')
-    merchant_id = 12334185
-
+    merchant_id = "12334185"
+    # merchant ids are strings!! this test is passing
     assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
-    # binding.pry
+    binding.pry
   end
 
 end

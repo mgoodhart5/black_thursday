@@ -42,12 +42,12 @@ class ItemRepo
   end
 
   def find_all_by_merchant_id(merchant_id)
-    dans_test = @all.select do |item|
+    @all.find_all do |item|
       item.merchant_id == merchant_id
     end
-    binding.pry
-#these are not the right enumerators
   end
+
+
 
 
 
