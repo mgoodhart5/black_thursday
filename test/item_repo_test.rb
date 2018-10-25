@@ -36,8 +36,30 @@ class ItemRepoTest < MiniTest::Test
     ir = ItemRepo.new('./test/item_sample.csv')
     description_1 = "glitter"
     description_2 = "dan loves coffee"
+
     assert_instance_of Array, ir.find_all_with_description(description_1)
     assert_equal [], ir.find_all_with_description(description_2)
+  end
+
+  def test_it_can_find_all_by_price_or_returns_empty_array
+    ir = ItemRepo.new('./test/item_sample.csv')
+    price_1 = 10_000_000
+    price_2 = 13.50
+    #this is a test in progress...refactoring unit price method
+    assert_equal [], ir.find_all_by_price(price_1)
+    assert_instance_of Array, ir.find_all_by_price(price_2)
+  end
+
+  def test_it_can_find_all_in_price_range
+    skip
+  end
+
+  def test_it_can_find_all_by_merchant_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    merchant_id = 12334185
+
+    assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
+    # binding.pry
   end
 
 end

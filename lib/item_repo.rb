@@ -35,6 +35,22 @@ class ItemRepo
     end
   end
 
+  def find_all_by_price(price)
+    @all.find_all do |item|
+      item.unit_price == price
+    end
+  end
+
+  def find_all_by_merchant_id(merchant_id)
+    dans_test = @all.select do |item|
+      item.merchant_id == merchant_id
+    end
+    binding.pry
+#these are not the right enumerators
+  end
+
+
+
 
 
 
