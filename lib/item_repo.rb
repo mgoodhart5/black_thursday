@@ -42,7 +42,7 @@ class ItemRepo
   end
 
   def find_all_by_price_in_range(range)
-    @all.find_all 
+    @all.find_all
   end
 
   def find_all_by_merchant_id(merchant_id)
@@ -62,6 +62,17 @@ class ItemRepo
    new_id = find_highest_id + 1
    attributes[:id] = new_id
    Item.new(attributes)
+  end
+
+  def update(id, attributes)
+      @all.find do |item|
+      if item.id == id
+        item.name.replace(attributes[:name])
+        item.description.replace(attributes[:description])
+        # item.unit_price.replace(attributes[:unit_price])
+      end
+    end
+
   end
 
 
