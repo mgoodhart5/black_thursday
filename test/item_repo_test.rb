@@ -45,21 +45,21 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_price_or_returns_empty_array
+    skip
     ir = ItemRepo.new('./test/item_sample.csv')
-    price_1 = 10_000_000
-    price_2 = 13.50
-    #this is a test in progress...refactoring unit price method
-    assert_equal [], ir.find_all_by_price(price_1)
-    assert_instance_of Array, ir.find_all_by_price(price_2)
-    # binding.pry
+    item = ir.find_all_by_price(1200)
+    expected = "blabjalsdfn"
+    #we need to change this per Brian sample to simple
+    assert_equal expected, item
   end
 
   def test_it_can_find_all_in_price_range
     skip
     ir = ItemRepo.new('./test/item_sample.csv')
-    price_range = (10.00..40.00)
-
-    assert_instance_of Array, ir.find_all_by_price_in_range(range)
+    item = ir.find_all_by_price_in_range(1000..4000)
+    expected = "stuff"
+    #need to change per brians suggestion sample to simple
+    assert_equal expected, item
   end
 
   def test_it_can_find_all_by_merchant_id
