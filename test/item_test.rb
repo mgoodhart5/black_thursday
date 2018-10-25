@@ -6,7 +6,12 @@ require 'time'
 class ItemTest < Minitest::Test
 
   def test_that_it_exists
-    item = Item.new
+    item = Item.new({
+      :id          => 1,
+      :name        => "Pencil",
+      :description => "You can use it to write things",
+      :merchant_id => 2
+      })
 
     assert_instance_of Item, item
   end

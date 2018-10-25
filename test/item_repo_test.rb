@@ -45,7 +45,6 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_price_or_returns_empty_array
-    skip
     ir = ItemRepo.new('./test/item_sample.csv')
     price_1 = 10_000_000
     price_2 = 13.50
@@ -56,7 +55,6 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_in_price_range
-    skip
     skip
   end
 
