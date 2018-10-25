@@ -18,6 +18,28 @@ class ItemRepoTest < MiniTest::Test
     assert_equal 3, ir.all.count
   end
 
+  def test_it_can_be_found_with_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    id = 263395617
+
+    assert_instance_of Item, ir.find_by_id(id)
+  end
+
+  def test_it_can_be_found_by_name
+    ir = ItemRepo.new('./test/item_sample.csv')
+    name = "510+ RealPush Icon Set"
+
+    assert_instance_of Item, ir.find_by_name(name)
+  end
+
+  def test_it_can_find_all_with_description_or_returns_empty_array
+    ir = ItemRepo.new('./test/item_sample.csv')
+    description_1 = "glitter"
+    description_2 = "dan loves coffee"
+    assert_instance_of Array, ir.find_all_with_description(description_1)
+    assert_equal [], ir.find_all_with_description(description_2)
+  end
+
 end
 
 
