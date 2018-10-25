@@ -41,6 +41,10 @@ class ItemRepo
     end
   end
 
+  def find_all_by_price_in_range(range)
+    @all.find_all 
+  end
+
   def find_all_by_merchant_id(merchant_id)
     @all.find_all do |item|
       item.merchant_id == merchant_id

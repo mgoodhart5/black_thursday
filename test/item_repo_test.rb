@@ -55,7 +55,10 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_in_price_range
-    skip
+    ir = ItemRepo.new('./test/item_sample.csv')
+    price_range = (10.00..40.00)
+
+    assert_instance_of Array, ir.find_all_by_price_in_range(range)
   end
 
   def test_it_can_find_all_by_merchant_id
@@ -63,7 +66,6 @@ class ItemRepoTest < MiniTest::Test
     merchant_id = "12334185"
     # merchant ids are strings!! this test is passing
     assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
-    binding.pry
   end
 
 end
