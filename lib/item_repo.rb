@@ -65,14 +65,19 @@ class ItemRepo
   end
 
   def update(id, attributes)
-      @all.find do |item|
+    @all.find do |item|
       if item.id == id
         item.name.replace(attributes[:name])
         item.description.replace(attributes[:description])
-        # item.unit_price.replace(attributes[:unit_price])
+        item.unit_price.replace(attributes[:unit_price])
       end
     end
+  end
 
+  def delete(id)
+    @all.delete_if do |item|
+      item.id == id
+    end
   end
 
 

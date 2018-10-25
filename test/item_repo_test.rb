@@ -86,11 +86,24 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_update_atrributes_by_id
     ir = ItemRepo.new('./test/item_sample.csv')
-    attributes = ({:name => "princess_glitter", :description => "beautiful"})
+    attributes = ({:name => "princess_glitter", :description => "beautiful", :unit_price => "1000"})
     item = ir.update(263395721, attributes )
 
     assert_equal "beautiful", item.description
     assert_equal "princess_glitter", item.name
+    assert_equal "1000", item.unit_price
+  end
+
+  def test_it_can_delete_item_from_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    ir.create_items('./test/item_sample.csv')
+    ir.all.count
+
+    assert_equal 3, ir.all.count
+
+    id = 263395721
+    ir.delete(id)
+    assert_equal 2, ir.all.count
   end
 
 end
