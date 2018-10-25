@@ -47,6 +47,21 @@ class ItemRepo
     end
   end
 
+  def find_highest_id
+     current_highest = @all.max_by do |item|
+       item.id
+     end
+     current_highest.id
+  end
+
+  def create(attributes)
+   new_id = find_highest_id + 1
+   attributes[:id] = new_id
+   Item.new(attributes)
+  end
+
+
+
 
 
 
