@@ -1,4 +1,5 @@
 class Item
+
   attr_reader :id,
               :name,
               :description,
@@ -8,7 +9,7 @@ class Item
               :merchant_id
 
   def initialize(item_information)
-    @id = item_information[:id]
+    @id = item_information[:id].to_i
     @name = item_information[:name]
     @description = item_information[:description]
     @unit_price = item_information[:unit_price]
@@ -18,9 +19,8 @@ class Item
   end
 
   def unit_price_to_dollars
-    "$#{@unit_price.to_f}"
+    @unit_price
+    # we need to figure out how to ACTUALLY convert this properly
   end
-
-
 
 end

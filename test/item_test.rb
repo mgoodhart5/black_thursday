@@ -6,7 +6,6 @@ require 'time'
 class ItemTest < Minitest::Test
 
   def test_that_it_exists
-    skip
     item = Item.new
 
     assert_instance_of Item, item
@@ -52,9 +51,8 @@ class ItemTest < Minitest::Test
 
     def test_it_can_convert_unit_price_to_dollars
       item = Item.new({:unit_price  => BigDecimal.new(10.99,4)})
-      #unit_price_to_dollars -
-      #returns the price of the item in dollars formatted as a Float
-      assert_equal "$10.99", item.unit_price_to_dollars
+
+      assert_equal 10.99, item.unit_price_to_dollars
     end
 
 

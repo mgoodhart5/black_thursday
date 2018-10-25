@@ -3,20 +3,64 @@ require_relative '../lib/item_repo'
 
 class ItemRepoTest < MiniTest::Test
   def test_it_exists
-    ir = ItemRepo.new
+    ir = ItemRepo.new('./test/item_sample.csv')
     assert_instance_of ItemRepo, ir
   end
 
   def test_it_starts_with_an_empty_array
-    ir = ItemRepo.new
-    assert_equal [], ir.all
+    ir = ItemRepo.new('./test/item_sample.csv')
+    assert_instance_of Array, ir.all
   end
 
-  def test_we_have_access_to_item_csv
-     item = CSV.open
-    assert_equal CSV, item.class
+  def test_that_it_can_create_item_instances
+    ir = ItemRepo.new('./test/item_sample.csv')
+
+    assert_equal 3, ir.all.count
   end
 
+  def test_it_can_be_found_with_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    id = 263395617
+
+    assert_instance_of Item, ir.find_by_id(id)
+  end
+
+  def test_it_can_be_found_by_name
+    ir = ItemRepo.new('./test/item_sample.csv')
+    name = "510+ RealPush Icon Set"
+
+    assert_instance_of Item, ir.find_by_name(name)
+  end
+
+  def test_it_can_find_all_with_description_or_returns_empty_array
+    ir = ItemRepo.new('./test/item_sample.csv')
+    description_1 = "glitter"
+    description_2 = "dan loves coffee"
+
+    assert_instance_of Array, ir.find_all_with_description(description_1)
+    assert_equal [], ir.find_all_with_description(description_2)
+  end
+
+  def test_it_can_find_all_by_price_or_returns_empty_array
+    ir = ItemRepo.new('./test/item_sample.csv')
+    price_1 = 10_000_000
+    price_2 = 13.50
+    #this is a test in progress...refactoring unit price method
+    assert_equal [], ir.find_all_by_price(price_1)
+    assert_instance_of Array, ir.find_all_by_price(price_2)
+  end
+
+  def test_it_can_find_all_in_price_range
+    skip
+  end
+
+  def test_it_can_find_all_by_merchant_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    merchant_id = 12334185
+
+    assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
+    # binding.pry
+  end
 
 end
 
