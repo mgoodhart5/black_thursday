@@ -21,6 +21,11 @@ class Item
   def unit_price_to_dollars
     @unit_price.to_f
     # we need to figure out how to ACTUALLY convert this properly
+    # ruby is shitty with money...these are strings
+    # that need to be converted to that the decimal is
+    # placed at -2 index....this is essential
+    # to moving forward
+    
   end
 
 end

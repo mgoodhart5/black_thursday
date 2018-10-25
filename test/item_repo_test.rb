@@ -51,7 +51,7 @@ class ItemRepoTest < MiniTest::Test
     #this is a test in progress...refactoring unit price method
     assert_equal [], ir.find_all_by_price(price_1)
     assert_instance_of Array, ir.find_all_by_price(price_2)
-    binding.pry
+    # binding.pry
   end
 
   def test_it_can_find_all_in_price_range
@@ -66,6 +66,23 @@ class ItemRepoTest < MiniTest::Test
     merchant_id = "12334185"
     # merchant ids are strings!! this test is passing
     assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
+<<<<<<< HEAD
+=======
+    # binding.pry
+  end
+
+  def test_it_can_find_current_highest_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+
+    assert_equal 263395721, ir.find_highest_id
+  end
+
+  def test_it_can_create_an_item_from_provided_attributes_with_highest_id_plus_1
+    ir = ItemRepo.new('./test/item_sample.csv')
+    new_item = ({:name => "princess_glitter"})
+    item = ir.create(new_item)
+    assert_equal 263395722, item.id
+>>>>>>> e6ed86dd3373521f3acc6a355788535b8af9662c
   end
 
 end
