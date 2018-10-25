@@ -45,21 +45,21 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_price_or_returns_empty_array
+    skip
     ir = ItemRepo.new('./test/item_sample.csv')
-    price_1 = 10_000_000
-    price_2 = 13.50
-    #this is a test in progress...refactoring unit price method
-    assert_equal [], ir.find_all_by_price(price_1)
-    assert_instance_of Array, ir.find_all_by_price(price_2)
-    # binding.pry
+    item = ir.find_all_by_price(1200)
+    expected = "blabjalsdfn"
+    #we need to change this per Brian sample to simple
+    assert_equal expected, item
   end
 
   def test_it_can_find_all_in_price_range
     skip
     ir = ItemRepo.new('./test/item_sample.csv')
-    price_range = (10.00..40.00)
-
-    assert_instance_of Array, ir.find_all_by_price_in_range(range)
+    item = ir.find_all_by_price_in_range(1000..4000)
+    expected = "stuff"
+    #need to change per brians suggestion sample to simple
+    assert_equal expected, item
   end
 
   def test_it_can_find_all_by_merchant_id
@@ -86,11 +86,24 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_update_atrributes_by_id
     ir = ItemRepo.new('./test/item_sample.csv')
-    attributes = ({:name => "princess_glitter", :description => "beautiful"})
+    attributes = ({:name => "princess_glitter", :description => "beautiful", :unit_price => "1000"})
     item = ir.update(263395721, attributes )
 
     assert_equal "beautiful", item.description
     assert_equal "princess_glitter", item.name
+    assert_equal "1000", item.unit_price
+  end
+
+  def test_it_can_delete_item_from_id
+    ir = ItemRepo.new('./test/item_sample.csv')
+    ir.create_items('./test/item_sample.csv')
+    ir.all.count
+
+    assert_equal 3, ir.all.count
+
+    id = 263395721
+    ir.delete(id)
+    assert_equal 2, ir.all.count
   end
 
 end

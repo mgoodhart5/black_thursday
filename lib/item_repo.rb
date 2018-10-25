@@ -37,12 +37,14 @@ class ItemRepo
 
   def find_all_by_price(price)
     @all.find_all do |item|
-      item.unit_price == price
+      item.unit_price == price.to_s
     end
   end
 
   def find_all_by_price_in_range(range)
-    @all.find_all
+    @all.find_all do |item|
+      range.include?(item.unit_price)
+    end
   end
 
   def find_all_by_merchant_id(merchant_id)
@@ -65,14 +67,19 @@ class ItemRepo
   end
 
   def update(id, attributes)
-      @all.find do |item|
+    @all.find do |item|
       if item.id == id
         item.name.replace(attributes[:name])
         item.description.replace(attributes[:description])
-        # item.unit_price.replace(attributes[:unit_price])
+        item.unit_price.replace(attributes[:unit_price])
       end
     end
+  end
 
+  def delete(id)
+    @all.delete_if do |item|
+      item.id == id
+    end
   end
 
 
