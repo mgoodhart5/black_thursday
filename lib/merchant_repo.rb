@@ -38,6 +38,27 @@ class MerchantRepo
     current_highest = @merchants.max_by do |merchant|
       merchant.id
     end
-    current_highest.id
+    current_highest.id.to_i
   end
+
+  def create(attributes)
+   new_id = find_highest_id + 1
+   attributes[:id] = new_id
+   Merchant.new(attributes)
+  end
+
+  def update(id, attributes)
+    @merchants.find do |merchant|
+      if merchant.id == id
+        merchant.name.replace(attributes[:name])
+      end
+    end
+  end
+
+  def delete(id)
+    @merchants.delete_if do |merchant|
+      merchant.id == id
+    end
+  end
+
 end
