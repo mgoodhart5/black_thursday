@@ -6,7 +6,6 @@ class MerchantRepo
   def initialize(merchant_data)
     @merchants = []
     create_merchants(merchant_data)
-
   end
 
   def create_merchants(merchant_data)
