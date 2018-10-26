@@ -47,7 +47,7 @@ class ItemTest < Minitest::Test
                   :merchant_id => 2
                   })
 
-      assert_equal BigDecimal.new(10.99,4), item.unit_price
+    assert_equal BigDecimal.new(10.99,4), item.unit_price
   end
 
   def test_that_it_is_initialized_with_Time_class
@@ -62,13 +62,20 @@ class ItemTest < Minitest::Test
                   })
 
     assert_instance_of Time, item.created_at
-    end
+  end
 
-    def test_it_can_convert_unit_price_to_dollars
-      skip
-      item = Item.new({:unit_price  => BigDecimal.new(10.99,4)})
-      #this is not correct even though it passes
-      assert_equal 10.99, item.unit_price_to_dollars
-    end
+  def test_it_can_convert_unit_price_to_dollars
+    item = Item.new({
+                  :id          => 1,
+                  :name        => "Pencil",
+                  :description => "You can use it to write things",
+                  :unit_price  => "1099",
+                  :created_at  => "2016-01-11 09:34:06 UTC",
+                  :updated_at  => "2016-01-11 09:34:06 UTC",
+                  :merchant_id => 2
+                  })
+
+    assert_equal 10.99, item.unit_price_to_dollars
+  end
 
 end

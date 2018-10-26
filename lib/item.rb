@@ -3,11 +3,11 @@ require 'time'
 
 class Item
   attr_reader :id,
-              :merchant_id
+              :merchant_id,
+              :unit_price
 
   attr_accessor :name,
                 :description,
-                :unit_price,
                 :created_at,
                 :updated_at
 
@@ -23,9 +23,8 @@ class Item
   end
 
   def unit_price_to_dollars
-    @unit_price.to_f
-    # binding.pry
-    # what the fuck/this requires more research
+    @unit_price.to_f.round(2)
+    # this requires more research
   end
 
   def time_change(time)
