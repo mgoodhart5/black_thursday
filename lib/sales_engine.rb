@@ -2,21 +2,19 @@ require 'CSV'
 
 
 class SalesEngine
-  attr_reader :item_csv, :merchant_csv
+  attr_accessor :items, :merchants
 
-  def initialize(csv_files)
-    @csv_files =csv_files
-    # @item_csv = csv_files[:items]
-    # @merchant_csv = csv_files[:merchant]
-  
+  def initialize(items, merchants)
+    @items = items
+    @merchants = merchants
+
   end
 
 
   def self.from_csv(csv_files)
-    @item_csv = csv_files[:items]
-    @merchant_csv = csv_files[:merchant]
-    ItemRepo.new(@item_csv)
-    MerchantRepo.new(@merchant_csv)
-    self.from_csv(@merchant_repo, @item_csv)
+    items = ItemRepo.new(csv_files[:items])
+    merchants = MerchantRepo.new(csv_files[:merchants])
+
+    self.new(items, merchants)
   end
 end
