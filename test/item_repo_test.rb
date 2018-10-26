@@ -2,24 +2,29 @@ require_relative 'test_helper'
 require_relative '../lib/item_repo'
 
 class ItemRepoTest < MiniTest::Test
+
+  def setup
+    @file = './test/item_sample.csv'
+  end
+
   def test_it_exists
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     assert_instance_of ItemRepo, ir
   end
 
   def test_it_starts_with_an_empty_array
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     assert_instance_of Array, ir.all
   end
 
   def test_that_it_can_create_item_instances
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
 
     assert_equal 3, ir.all.count
   end
 
   def test_it_can_be_found_with_id
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     id = 263395617
 
     assert_instance_of Item, ir.find_by_id(id)
@@ -27,7 +32,7 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_be_found_by_name
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     name = "510+ RealPush Icon Set"
 
     assert_instance_of Item, ir.find_by_name(name)
@@ -35,7 +40,7 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_with_description_or_returns_empty_array
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     description_1 = "glitter"
     description_2 = "dan loves coffee"
 
@@ -46,7 +51,7 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_by_price_or_returns_empty_array
     skip
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     item = ir.find_all_by_price(1200)
     expected = "blabjalsdfn"
     #we need to change this per Brian sample to simple
@@ -55,7 +60,7 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_in_price_range
     skip
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     item = ir.find_all_by_price_in_range(1000..4000)
     expected = "stuff"
     #need to change per brians suggestion sample to simple
@@ -63,7 +68,7 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_merchant_id
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     merchant_id = "12334185"
     # merchant ids are strings!! this test is passing
     assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
@@ -72,20 +77,20 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_current_highest_id
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
 
     assert_equal 263395721, ir.find_highest_id
   end
 
   def test_it_can_create_an_item_from_provided_attributes_with_highest_id_plus_1
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     new_item = ({:name => "princess_glitter"})
     item = ir.create(new_item)
     assert_equal 263395722, item.id
   end
 
   def test_it_can_update_attributes_by_id
-    ir = ItemRepo.new('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
     attributes = ({:name => "princess_glitter", :description => "beautiful", :unit_price => "1000"})
     item = ir.update(263395721, attributes)
 
@@ -95,8 +100,8 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_delete_item_from_id
-    ir = ItemRepo.new('./test/item_sample.csv')
-    ir.create_items('./test/item_sample.csv')
+    ir = ItemRepo.new(@file)
+    ir.create_items(@file)
     ir.all.count
 
     assert_equal 3, ir.all.count

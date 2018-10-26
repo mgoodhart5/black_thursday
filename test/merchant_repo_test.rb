@@ -3,53 +3,58 @@ require_relative '../lib/merchant_repo'
 
 
 class MerchantRepoTest < MiniTest::Test
+
+  def setup
+    @file = './test/merchant_sample.csv'
+  end
+
   def test_it_exists
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
 
     assert_instance_of MerchantRepo, mr
   end
 
   def test_it_starts_with_an_empty_array
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
 
     assert_instance_of Array, mr.merchants
   end
 
   def test_that_it_can_create_merchant_instances
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
 
     assert_equal 3, mr.merchants.count
   end
 
   def test_it_can_be_found_with_id
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
     id = 12334112
 
     assert_instance_of Merchant, mr.find_by_id(id)
   end
 
   def test_it_can_be_found_by_name
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
     name = "Candisart"
 
     assert_instance_of Merchant, mr.find_by_name(name)
   end
 
   def test_it_can_find_all_by_name
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
     name = "Candisart"
 
     assert_instance_of Array, mr.find_all_by_name(name)
   end
 
   def test_it_can_find_highest_id
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
 
     assert_equal 12334113, mr.find_highest_id
   end
 
   def test_it_can_create_a_merchant_with_attributes
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
     new_merchant = ({:name => "princess"})
     merchant = mr.create(new_merchant)
 
@@ -57,7 +62,7 @@ class MerchantRepoTest < MiniTest::Test
   end
 
   def test_it_can_update_attributes_by_id
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
     attributes = ({:name => "Glitter Store"})
     merchant = mr.update(12334112, attributes)
     # lets look at this tomorrow...to_i?
@@ -66,8 +71,8 @@ class MerchantRepoTest < MiniTest::Test
   end
 
   def test_it_can_be_deleted_by_id
-    mr = MerchantRepo.new('./test/merchant_sample.csv')
-    mr.create_merchants('./test/merchant_sample.csv')
+    mr = MerchantRepo.new(@file)
+    mr.create_merchants(@file)
     mr.merchants.count
 
     assert_equal 3, mr.merchants.count
