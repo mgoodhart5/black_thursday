@@ -1,5 +1,5 @@
-require 'CSV'
-
+require_relative '../lib/merchant_repo'
+require_relative '../lib/item_repo'
 
 class SalesEngine
   attr_accessor :items, :merchants
