@@ -55,4 +55,10 @@ class MerchantRepo
     end
   end
 
+  def delete(id)
+    @merchants.delete_if do |merchant|
+      merchant.id == id
+    end
+  end
+
 end

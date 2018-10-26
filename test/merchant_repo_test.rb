@@ -23,7 +23,7 @@ class MerchantRepoTest < MiniTest::Test
 
   def test_it_can_be_found_with_id
     mr = MerchantRepo.new('./test/merchant_sample.csv')
-    id = "12334112"
+    id = 12334112
 
     assert_instance_of Merchant, mr.find_by_id(id)
   end
@@ -59,10 +59,22 @@ class MerchantRepoTest < MiniTest::Test
   def test_it_can_update_attributes_by_id
     mr = MerchantRepo.new('./test/merchant_sample.csv')
     attributes = ({:name => "Glitter Store"})
-    merchant = mr.update("12334112", attributes)
+    merchant = mr.update(12334112, attributes)
     # lets look at this tomorrow...to_i?
 
     assert_equal "Glitter Store", merchant.name
+  end
+
+  def test_it_can_be_deleted_by_id
+    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    mr.create_merchants('./test/merchant_sample.csv')
+    mr.merchants.count
+
+    assert_equal 3, mr.merchants.count
+
+    id = 12334112
+    mr.delete(id)
+    assert_equal 2, mr.merchants.count
   end
 
 
