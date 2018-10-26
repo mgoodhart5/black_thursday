@@ -47,4 +47,12 @@ class MerchantRepo
    Merchant.new(attributes)
   end
 
+  def update(id, attributes)
+    @merchants.find do |merchant|
+      if merchant.id == id
+        merchant.name.replace(attributes[:name])
+      end
+    end
+  end
+
 end

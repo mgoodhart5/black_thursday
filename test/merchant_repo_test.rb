@@ -56,6 +56,15 @@ class MerchantRepoTest < MiniTest::Test
     assert_equal 12334114, merchant.id
   end
 
+  def test_it_can_update_attributes_by_id
+    mr = MerchantRepo.new('./test/merchant_sample.csv')
+    attributes = ({:name => "Glitter Store"})
+    merchant = mr.update("12334112", attributes)
+    # lets look at this tomorrow...to_i?
+
+    assert_equal "Glitter Store", merchant.name
+  end
+
 
 
 

@@ -84,10 +84,10 @@ class ItemRepoTest < MiniTest::Test
     assert_equal 263395722, item.id
   end
 
-  def test_it_can_update_atrributes_by_id
+  def test_it_can_update_attributes_by_id
     ir = ItemRepo.new('./test/item_sample.csv')
     attributes = ({:name => "princess_glitter", :description => "beautiful", :unit_price => "1000"})
-    item = ir.update(263395721, attributes )
+    item = ir.update(263395721, attributes)
 
     assert_equal "beautiful", item.description
     assert_equal "princess_glitter", item.name
