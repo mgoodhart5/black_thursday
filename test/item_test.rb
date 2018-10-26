@@ -47,16 +47,16 @@ class ItemTest < Minitest::Test
       :name        => "Pencil",
       :description => "You can use it to write things",
       :unit_price  => BigDecimal.new(10.99,4),
-      #can we even test this?
-      # :created_at  => Time.now,
-      # :updated_at  => Time.now,
+      :created_at  => Time.now,
+      :updated_at  => Time.now,
       })
-      # assert_equal Time.now, item.created_at
+
+      assert_instance_of Time, item.created_at
     end
 
     def test_it_can_convert_unit_price_to_dollars
       item = Item.new({:unit_price  => BigDecimal.new(10.99,4)})
-
+      #this is not correct even though it passes
       assert_equal 10.99, item.unit_price_to_dollars
     end
 
