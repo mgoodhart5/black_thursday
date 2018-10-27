@@ -50,12 +50,10 @@ class MerchantRepo
 
   def update(id, attributes)
     merchant = find_by_id(id)
-    if merchant.nil?
-      merchant
-    else
-      merchant.name = attributes[:name]
+    if merchant
+       merchant.name = attributes[:name] if attributes[:name]
     end
-    #why is this letting the id be updated? is that what the spec harness says?
+    merchant
   end
 
   def delete(id)

@@ -75,6 +75,7 @@ class ItemRepo
        single_item.unit_price = attributes[:unit_price] if attributes[:unit_price]
        single_item.updated_at = Time.now
      end
+     single_item
   end
 
   def delete(id)

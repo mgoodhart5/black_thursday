@@ -34,7 +34,6 @@ class MerchantRepoTest < MiniTest::Test
     id_2 = 65
 
     assert_equal nil, mr.find_by_id(id_2)
-    binding.pry
   end
 
   def test_it_can_be_found_by_name
@@ -69,7 +68,6 @@ class MerchantRepoTest < MiniTest::Test
     mr = MerchantRepo.new(@file)
     attributes = ({:name => "Glitter Store"})
     merchant = mr.update(12334112, attributes)
-    # lets look at this tomorrow...to_i?
 
     assert_equal "Glitter Store", merchant.name
   end
@@ -77,7 +75,7 @@ class MerchantRepoTest < MiniTest::Test
   def test_it_can_be_deleted_by_id
     mr = MerchantRepo.new(@file)
     mr.create_merchants(@file)
-    mr.merchants.count
+    mr.all.count
 
     assert_equal 3, mr.all.count
 
