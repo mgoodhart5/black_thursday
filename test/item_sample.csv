@@ -3,3 +3,5 @@ id,name,description,unit_price,merchant_id,created_at,updated_at
 2,name_2,description_2,2000,12334112,2015-03-10 08:23:05 UTC,2015-03-10 08:23:05 UTC
 3,name_3,description_3,3000,12334113,2014-02-09 07:12:04 UTC,2014-02-09 07:12:04 UTC
 4,name_4,description_4,4000,12334113,2014-02-09 07:12:04 UTC,2014-02-09 07:12:04 UTC
+5,name_5,description_5,5000,12334112,2015-03-10 08:23:05 UTC,2015-03-10 08:23:05 UTC
+6,name_6,description_6,2000,12334112,2015-03-10 08:23:05 UTC,2015-03-10 08:23:05 UTC

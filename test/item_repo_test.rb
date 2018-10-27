@@ -23,7 +23,7 @@ class ItemRepoTest < MiniTest::Test
 
   def test_that_it_can_create_item_instances
 
-    assert_equal 4, @ir.all.count
+    assert_equal 6, @ir.all.count
   end
 
   def test_it_can_be_found_with_id
@@ -49,33 +49,33 @@ class ItemRepoTest < MiniTest::Test
   def test_it_can_find_all_by_price_or_returns_empty_array
     item = @ir.find_all_by_price(20)
 
-    assert_equal 1, item.count
+    assert_equal 2, item.count
   end
 
   def test_it_can_find_all_in_price_range
     items = @ir.find_all_by_price_in_range(20..40)
 
-    assert_equal 3, items.count
+    assert_equal 4, items.count
   end
 
   def test_it_can_find_all_by_merchant_id
     merchant_id = 12334112
     merchants = @ir.find_all_by_merchant_id(merchant_id)
-    expected = 1
+    expected = 3
 
     assert_equal expected, merchants.count
   end
 
   def test_it_can_find_current_highest_id
 
-    assert_equal 4, @ir.find_highest_id
+    assert_equal 6, @ir.find_highest_id
   end
 
   def test_it_can_create_an_item_from_provided_attributes_with_highest_id_plus_1
     new_item = ({:name => "princess_glitter"})
     item = @ir.create(new_item)
 
-    assert_equal 5, item.id
+    assert_equal 7, item.id
   end
 
   def test_it_can_update_attributes_by_id
@@ -90,11 +90,11 @@ class ItemRepoTest < MiniTest::Test
   def test_it_can_delete_item_from_id
     @ir.all.count
 
-    assert_equal 4, @ir.all.count
+    assert_equal 6, @ir.all.count
 
     id = 2
     @ir.delete(id)
-    assert_equal 3, @ir.all.count
+    assert_equal 5, @ir.all.count
   end
 
 end
