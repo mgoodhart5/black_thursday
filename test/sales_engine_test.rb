@@ -4,6 +4,7 @@ require_relative '../lib/merchant_repo'
 require_relative '../lib/item_repo'
 
 class SalesEngineTest < MiniTest::Test
+
   def test_that_it_exists
     se = SalesEngine.from_csv({
       :items     => "./test/item_sample.csv",
@@ -21,11 +22,3 @@ class SalesEngineTest < MiniTest::Test
     assert_instance_of ItemRepo, se.items
   end
 end
-
-
-# def create_items(item_data)
-#   things = CSV.read(item_data, headers: true, header_converters: :symbol)
-#   @all = things.map do |thing|
-#     Item.new(thing)
-#   end
-# end

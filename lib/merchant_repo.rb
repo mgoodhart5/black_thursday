@@ -1,40 +1,34 @@
 require 'CSV'
 require_relative '../lib/merchant'
+require_relative '../lib/sales_engine'
 
 class MerchantRepo
-   attr_reader :merchants
-  def initialize(merchant_data)
-    @merchants = []
-    create_merchants(merchant_data)
-  end
+   attr_reader :all
 
-  def create_merchants(merchant_data)
-    people = CSV.read(merchant_data, headers: true, header_converters: :symbol)
-    @merchants = people.map do |person|
-      Merchant.new(person)
-    end
+  def initialize(merchant_data)
+    @all = merchant_data
   end
 
   def find_by_id(id)
-    @merchants.find do |merchant|
+    @all.find do |merchant|
       merchant.id == id
     end
   end
 
   def find_by_name(name)
-    @merchants.find do |merchant|
+    @all.find do |merchant|
       merchant.name.upcase == name.upcase
     end
   end
 
   def find_all_by_name(name)
-    @merchants.find_all do |merchant|
+    @all.find_all do |merchant|
       merchant.name.downcase.include?(name.downcase)
     end
   end
 
   def find_highest_id
-    current_highest = @merchants.max_by do |merchant|
+    current_highest = @all.max_by do |merchant|
       merchant.id
     end
     current_highest.id.to_i
@@ -43,19 +37,20 @@ class MerchantRepo
   def create(attributes)
    new_id = find_highest_id + 1
    attributes[:id] = new_id
-   Merchant.new(attributes)
+   @all << new_merchant = Merchant.new(attributes)
+   new_merchant
   end
 
   def update(id, attributes)
-    @merchants.find do |merchant|
-      if merchant.id == id
-        merchant.name.replace(attributes[:name])
-      end
+    merchant = find_by_id(id)
+    if merchant
+       merchant.name = attributes[:name] if attributes[:name]
     end
+    merchant
   end
 
   def delete(id)
-    @merchants.delete_if do |merchant|
+    @all.delete_if do |merchant|
       merchant.id == id
     end
   end
