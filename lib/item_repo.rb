@@ -64,6 +64,12 @@ class ItemRepo
    new_id = find_highest_id + 1
    attributes[:id] = new_id
    Item.new(attributes)
+   # this is making the test fail and ALL RELATES BACK
+   # to the F***ing big decimal
+   #why does it work that way?
+   #because it is just the attributes that get passed
+   # so fuck the big decimal and it's neediness
+   #none of the other methods are that fucking needy
   end
 
   def update(id, attributes)
