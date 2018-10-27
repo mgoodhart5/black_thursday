@@ -44,7 +44,7 @@ class SalesAnalyst
     end.each do |number|
       sum_2 += number
     end
-    final = sum_2 / counted_items.count.to_f
+    final = sum_2 / ((counted_items.count.to_f) -1)
     final
   end
 

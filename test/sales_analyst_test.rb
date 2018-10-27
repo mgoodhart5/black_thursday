@@ -33,12 +33,12 @@ class SalesAnalystTest < Minitest::Test
 
   def test_the_next_step_of_standard_deviation
 
-    assert_equal 0.6666666666666666, @sa.next_step
+    assert_equal 1.0, @sa.next_step
   end
 
   def test_that_it_can_calculate_average_items_per_merchant_standard_deviation
 
-    assert_equal 0.82, @sa.average_items_per_merchant_standard_deviation
+    assert_equal 1.0, @sa.average_items_per_merchant_standard_deviation
   end
 
 
