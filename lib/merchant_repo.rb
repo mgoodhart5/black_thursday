@@ -1,19 +1,12 @@
 require 'CSV'
 require_relative '../lib/merchant'
+require_relative '../lib/sales_engine'
 
 class MerchantRepo
    attr_reader :all
 
   def initialize(merchant_data)
-    @all = []
-    create_merchants(merchant_data)
-  end
-
-  def create_merchants(merchant_data)
-    people = CSV.read(merchant_data, headers: true, header_converters: :symbol)
-    @all = people.map do |person|
-      Merchant.new(person)
-    end
+    @all = merchant_data
   end
 
   def find_by_id(id)
