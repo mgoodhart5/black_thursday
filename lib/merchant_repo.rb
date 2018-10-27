@@ -53,8 +53,9 @@ class MerchantRepo
     if merchant.nil?
       merchant
     else
-      merchant.name.replace(attributes[:name])
+      merchant.name = attributes[:name]
     end
+    #why is this letting the id be updated? is that what the spec harness says?
   end
 
   def delete(id)

@@ -70,11 +70,9 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_by_merchant_id
     ir = ItemRepo.new(@file)
-    merchant_id = "12334185"
+    merchant_id = 12334185
     # merchant ids are strings!! this test is passing
     assert_instance_of Array, ir.find_all_by_merchant_id(merchant_id)
-
-    # binding.pry
   end
 
   def test_it_can_find_current_highest_id
