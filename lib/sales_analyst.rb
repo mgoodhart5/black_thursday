@@ -16,35 +16,37 @@ class SalesAnalyst
     (@item_repo.all.count.to_f / @merchant_repo.all.count).round(2)
   end
 
-  def mean_of_merchant_items
+  def average_items_per_merchant_standard_deviation
+    Math.sqrt(next_step).round(2)
+  end
+
+  def counted_items
     count = []
     @merchant_repo.all.each do |merchant|
       count << @item_repo.find_all_by_merchant_id(merchant.id).count
     end
+    count
+  end
+
+  def mean_of_merchant_items
     sum = 0
-    count.each do |number|
+    counted_items.each do |number|
       sum += number
     end
     sum / @merchant_repo.all.count
   end
 
-  # @item_repo.find_all_by_merchant_id(merchant.id) returns an array of
-  # all the items assosciated with a merchant id
-
-  # now all you need to do is to find how many items are in each of these
-  # arrays and output a new array of these things
-
-  # ex -> [ [item, item, item ], [item], [item, item]]
-  # what u want -> [3, 1, 2]
-
-
-
-
-
-  # def average_items_per_merchant_standard_deviation
-  #
-  # end
-
+  def next_step
+    sum_2 = 0
+    counted_items.map do |number|
+      answer = (number - mean_of_merchant_items)
+      answer * answer
+    end.each do |number|
+      sum_2 += number
+    end
+    final = sum_2 / counted_items.count.to_f
+    final
+  end
 
 
 end
