@@ -1,4 +1,4 @@
 id,name,description,unit_price,merchant_id,created_at,updated_at
-1,name_1,description_1,1,merchant_1,2016-01-11 09:34:06 UTC,2016-01-11 09:34:06 UTC
-2,name_2,description_2,2,merchant_2,2015-03-10 08:23:05 UTC,2015-03-10 08:23:05 UTC
-3,name_3,description_3,3,merchant_3,2014-02-09 07:12:04 UTC,2014-02-09 07:12:04 UTC
+1,name_1,description_1,1000,merchant_1,2016-01-11 09:34:06 UTC,2016-01-11 09:34:06 UTC
+2,name_2,description_2,2000,merchant_2,2015-03-10 08:23:05 UTC,2015-03-10 08:23:05 UTC
+3,name_3,description_3,3000,merchant_3,2014-02-09 07:12:04 UTC,2014-02-09 07:12:04 UTC

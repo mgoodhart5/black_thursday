@@ -17,20 +17,24 @@ class MerchantRepoTest < MiniTest::Test
   def test_it_starts_with_an_empty_array
     mr = MerchantRepo.new(@file)
 
-    assert_instance_of Array, mr.merchants
+    assert_instance_of Array, mr.all
   end
 
   def test_that_it_can_create_merchant_instances
     mr = MerchantRepo.new(@file)
 
-    assert_equal 3, mr.merchants.count
+    assert_equal 3, mr.all.count
   end
 
-  def test_it_can_be_found_with_id
+  def test_it_can_be_found_with_id_or_return_nil
     mr = MerchantRepo.new(@file)
-    id = 12334112
+    id_1 = 12334112
 
-    assert_instance_of Merchant, mr.find_by_id(id)
+    assert_instance_of Merchant, mr.find_by_id(id_1)
+    id_2 = 65
+
+    assert_equal nil, mr.find_by_id(id_2)
+    binding.pry
   end
 
   def test_it_can_be_found_by_name
@@ -75,15 +79,11 @@ class MerchantRepoTest < MiniTest::Test
     mr.create_merchants(@file)
     mr.merchants.count
 
-    assert_equal 3, mr.merchants.count
+    assert_equal 3, mr.all.count
 
     id = 12334112
     mr.delete(id)
-    assert_equal 2, mr.merchants.count
+    assert_equal 2, mr.all.count
   end
-
-
-
-
 
 end

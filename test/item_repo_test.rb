@@ -41,7 +41,7 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_with_description_or_returns_empty_array
     ir = ItemRepo.new(@file)
-    description_1 = "glitter"
+    description_1 = "description_1"
     description_2 = "dan loves coffee"
 
     assert_instance_of Array, ir.find_all_with_description(description_1)
@@ -51,14 +51,15 @@ class ItemRepoTest < MiniTest::Test
 
   def test_it_can_find_all_by_price_or_returns_empty_array
     ir = ItemRepo.new(@file)
-    item = ir.find_all_by_price(1200)
-    expected = "blabjalsdfn"
+    item = ir.find_all_by_price(2000)
+    # binding.pry
     #we need to change this per Brian sample to simple
     # this is failing!
     assert_equal expected, item
   end
 
   def test_it_can_find_all_in_price_range
+    skip
     ir = ItemRepo.new(@file)
     item = ir.find_all_by_price_in_range(1000..4000)
     expected = "stuff"
@@ -83,6 +84,7 @@ class ItemRepoTest < MiniTest::Test
   end
 
   def test_it_can_create_an_item_from_provided_attributes_with_highest_id_plus_1
+    skip
     ir = ItemRepo.new(@file)
     new_item = ({:name => "princess_glitter"})
     item = ir.create(new_item)
@@ -117,20 +119,3 @@ class ItemRepoTest < MiniTest::Test
   end
 
 end
-
-
-
-# The ItemRepository is responsible for holding and searching our Item instances. This object represents one line of data from the file items.csv.
-#
-# It offers the following methods:
-#
-# all - returns an array of all known Item instances
-# find_by_id(id) - returns either nil or an instance of Item with a matching ID
-# find_by_name(name) - returns either nil or an instance of Item having done a case insensitive search
-# find_all_with_description(description) - returns either [] or instances of Item where the supplied string appears in the item description (case insensitive)
-# find_all_by_price(price) - returns either [] or instances of Item where the supplied price exactly matches
-# find_all_by_price_in_range(range) - returns either [] or instances of Item where the supplied price is in the supplied range (a single Ruby range instance is passed in)
-# find_all_by_merchant_id(merchant_id) - returns either [] or instances of Item where the supplied merchant ID matches that supplied
-# create(attributes) - create a new Item instance with the provided attributes. The new Item’s id should be the current highest Item id plus 1.
-# update(id, attributes) - update the Item instance with the corresponding id with the provided attributes. Only the item’s name, desription, and unit_price attributes can be updated. This method will also change the items updated_at attribute to the current time.
-# delete(id) - delete the Item instance with the corresponding id
