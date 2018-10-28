@@ -3,16 +3,17 @@ require_relative '../lib/item_repo'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/item'
 require_relative '../lib/merchant'
+require 'CSV'
 
 class SalesEngine
-  attr_reader :analyst, :merchants_repo, :items_repo
-  attr_accessor :items, :merchants
+  attr_reader :analyst, :items, :merchants
+  attr_accessor :item_data, :merchant_data
 
   def initialize(csv_files)
-    @merchants = CSV.open(csv_files[:merchants], headers: true, header_converters: :symbol)
-    @merchants_repo = MerchantRepo.new(create_merchants(@merchants))
-    @items = CSV.open(csv_files[:items], headers: true, header_converters: :symbol)
-    @items_repo = ItemRepo.new(create_items(@items))
+    @merchant_data = CSV.open(csv_files[:merchants], headers: true, header_converters: :symbol)
+    @merchants = MerchantRepo.new(create_merchants(@merchant_data))
+    @item_data = CSV.open(csv_files[:items], headers: true, header_converters: :symbol)
+    @items = ItemRepo.new(create_items(@item_data))
     @analyst = SalesAnalyst.new(@items_repo, @merchants_repo)
   end
 
@@ -22,15 +23,19 @@ class SalesEngine
   end
 
   def create_merchants(people)
-    @all = people.map do |person|
-      Merchant.new(person)
+    all_merchants = []
+     people.each do |person|
+      all_merchants <<  Merchant.new(person)
     end
+    all_merchants
   end
 
   def create_items(item_data)
-    @all = item_data.map do |item|
-      Item.new(item)
+    all_items = []
+     item_data.each do |item|
+      all_items << Item.new(item)
     end
+    all_items
   end
 
 end
