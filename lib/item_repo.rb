@@ -1,20 +1,12 @@
 require 'CSV'
 require_relative '../lib/item'
-
+require_relative '../lib/sales_engine'
 
 class ItemRepo
   attr_reader :all
 
   def initialize(item_data)
-    @all = []
-    create_items(item_data)
-  end
-
-  def create_items(item_data)
-    things = CSV.read(item_data, headers: true, header_converters: :symbol)
-    @all = things.map do |thing|
-      Item.new(thing)
-    end
+    @all = item_data
   end
 
   def find_by_id(id)
@@ -37,7 +29,7 @@ class ItemRepo
 
   def find_all_by_price(price)
     @all.find_all do |item|
-      item.unit_price == price.to_s
+      item.unit_price == price
     end
   end
 
@@ -63,23 +55,19 @@ class ItemRepo
   def create(attributes)
    new_id = find_highest_id + 1
    attributes[:id] = new_id
-   Item.new(attributes)
-   # this is making the test fail and ALL RELATES BACK
-   # to the F***ing big decimal
-   #why does it work that way?
-   #because it is just the attributes that get passed
-   # so fuck the big decimal and it's neediness
-   #none of the other methods are that fucking needy
+   @all << new_item = Item.new(attributes)
+   new_item
   end
 
   def update(id, attributes)
-    @all.find do |item|
-      if item.id == id
-        item.name.replace(attributes[:name])
-        item.description.replace(attributes[:description])
-        item.unit_price.replace(attributes[:unit_price])
-      end
-    end
+    single_item = find_by_id(id)
+     if single_item
+       single_item.name = attributes[:name] if attributes[:name]
+       single_item.description = attributes[:description] if attributes[:description]
+       single_item.unit_price = attributes[:unit_price] if attributes[:unit_price]
+       single_item.updated_at = Time.now
+     end
+     single_item
   end
 
   def delete(id)
