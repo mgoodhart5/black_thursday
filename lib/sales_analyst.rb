@@ -55,5 +55,15 @@ class SalesAnalyst
     end
   end
 
+  def average_item_price_for_merchant(id)
+    merchant_items = @item_repo.find_all_by_merchant_id(id)
+    price_sum = merchant_items.map do |item|
+      item.unit_price
+    end.reduce(:+)
+    price_sum / BigDecimal.new(merchant_items.length)
+  end
+
+
+
 
 end

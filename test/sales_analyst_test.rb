@@ -52,5 +52,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 12334112, @sa.merchants_with_high_item_count.first.id
   end
 
+  def test_that_it_can_calculate_average_price_per_merchant
+
+   assert_equal BigDecimal.new(30), @sa.average_item_price_for_merchant(12334112)
+  end
+
 
 end
