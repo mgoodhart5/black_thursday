@@ -62,5 +62,9 @@ class SalesAnalystTest < Minitest::Test
     assert_equal BigDecimal.new(25), @sa.average_average_price_per_merchant
   end
 
+  def test_that_it_can_find_all_golden_items
+
+    assert_equal [], @sa.golden_items
+  end
 
 end

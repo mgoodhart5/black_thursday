@@ -21,6 +21,7 @@ class SalesAnalyst
   end
 
   def counted_items
+    # rename this method cause WHAT?
     count = []
     @merchant_repo.all.each do |merchant|
       count << @item_repo.find_all_by_merchant_id(merchant.id).count
@@ -37,6 +38,7 @@ class SalesAnalyst
   end
 
   def next_step
+    # also rename this method
     sum_2 = 0
     counted_items.map do |number|
       answer = (number - mean_of_merchant_items)
@@ -44,8 +46,7 @@ class SalesAnalyst
     end.each do |number|
       sum_2 += number
     end
-    final = sum_2 / ((counted_items.count.to_f) - 1)
-    final
+    sum_2 / ((counted_items.count.to_f) - 1)
   end
 
   def merchants_with_high_item_count
@@ -75,6 +76,12 @@ class SalesAnalyst
       sum + number
     end
     merchant_average_sum / BigDecimal.new(merchant_averages.length)
+  end
+
+  def golden_items
+    @item_repo.all.find_all do |item|
+      item.unit_price >= (@item_repo.item_price_standard_deviation * 2) + @item_repo.average_item_price
+    end
   end
 
 
