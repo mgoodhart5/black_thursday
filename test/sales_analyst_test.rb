@@ -19,6 +19,11 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of SalesAnalyst, @sa
   end
 
+  def test_average_items_per_merchant
+
+    assert_equal 2.0, @sa.average_items_per_merchant
+  end
+
 
   def test_that_an_array_of_counted_item_numbers_is_returned
 
@@ -41,5 +46,25 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1.0, @sa.average_items_per_merchant_standard_deviation
   end
 
+  def test_for_merchants_with_high_item_count
+
+    assert_equal 1, @sa.merchants_with_high_item_count.length
+    assert_equal 12334112, @sa.merchants_with_high_item_count.first.id
+  end
+
+  def test_that_it_can_calculate_average_price_per_merchant
+
+   assert_equal BigDecimal.new(30), @sa.average_item_price_for_merchant(12334112)
+  end
+
+  def test_that_it_returns_average_average_price_per_merchant
+
+    assert_equal BigDecimal.new(25), @sa.average_average_price_per_merchant
+  end
+
+  def test_that_it_can_find_all_golden_items
+
+    assert_equal [], @sa.golden_items
+  end
 
 end

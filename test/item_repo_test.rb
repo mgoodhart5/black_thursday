@@ -97,4 +97,14 @@ class ItemRepoTest < MiniTest::Test
     assert_equal 5, @ir.all.count
   end
 
+  def test_that_it_can_calculate_average_price_for_all_items
+
+    assert_equal 28, @ir.average_item_price.to_i
+  end
+
+  def test_that_it_can_calculate_standard_devation_of_item_price
+
+    assert_equal 14.72, @ir.item_price_standard_deviation
+  end
+
 end

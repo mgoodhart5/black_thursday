@@ -76,4 +76,24 @@ class ItemRepo
     end
   end
 
+  def average_item_price
+    item_price_sum = @all.inject(BigDecimal.new(0)) do |sum, item|
+      sum + item.unit_price
+    end
+    item_price_sum / BigDecimal.new(@all.length)
+  end
+
+  def item_price_standard_deviation
+    sum = 0
+    first_step = @all.map do |item|
+      answer = (item.unit_price - average_item_price)
+      answer * answer
+    end
+    first_step.each do |number|
+      sum += number
+    end
+    final_step = sum / ((@all.length.to_f) - 1)
+    Math.sqrt(final_step.to_f).round(2)
+  end
+
 end
