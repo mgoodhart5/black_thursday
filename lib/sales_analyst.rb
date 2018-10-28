@@ -4,16 +4,17 @@ require_relative '../lib/sales_engine'
 require_relative '../lib/item'
 require_relative '../lib/merchant'
 require 'mathn'
+require 'CSV'
 
 class SalesAnalyst
 
-  def initialize(item_repo, merchant_repo)
-    @item_repo = item_repo
-    @merchant_repo = merchant_repo
+  def initialize(items, merchants)
+    @items = items
+    @merchants = merchants
   end
 
   def average_items_per_merchant
-    (@item_repo.all.count.to_f / @merchant_repo.all.count).round(2)
+    (@items.all.count.to_f / @merchants.all.count).round(2)
   end
 
   def average_items_per_merchant_standard_deviation
@@ -23,8 +24,8 @@ class SalesAnalyst
   def counted_items
     # rename this method cause WHAT?
     count = []
-    @merchant_repo.all.each do |merchant|
-      count << @item_repo.find_all_by_merchant_id(merchant.id).count
+    @merchants.all.each do |merchant|
+      count << @items.find_all_by_merchant_id(merchant.id).count
     end
     count
   end
@@ -34,7 +35,7 @@ class SalesAnalyst
     counted_items.each do |number|
       sum += number
     end
-    sum / @merchant_repo.all.count
+    sum / @merchants.all.count
   end
 
   def next_step
@@ -50,14 +51,14 @@ class SalesAnalyst
   end
 
   def merchants_with_high_item_count
-    @merchant_repo.all.find_all do |merchant|
-      merchant_items = @item_repo.find_all_by_merchant_id(merchant.id)
+    @merchants.all.find_all do |merchant|
+      merchant_items = @items.find_all_by_merchant_id(merchant.id)
       merchant_items.length >= (average_items_per_merchant + average_items_per_merchant_standard_deviation)
     end
   end
 
   def average_item_price_for_merchant(id)
-    merchant_items = @item_repo.find_all_by_merchant_id(id)
+    merchant_items = @items.find_all_by_merchant_id(id)
     price_sum = merchant_items.map do |item|
       item.unit_price
     end.reduce(:+)
@@ -65,8 +66,8 @@ class SalesAnalyst
   end
 
   def average_average_price_per_merchant
-    merchant_averages = @merchant_repo.all.map do |merchant|
-      merchant_items = @item_repo.find_all_by_merchant_id(merchant.id)
+    merchant_averages = @merchants.all.map do |merchant|
+      merchant_items = @items.find_all_by_merchant_id(merchant.id)
       price_sum = merchant_items.map do |item|
         item.unit_price
       end.reduce(:+)
@@ -79,8 +80,8 @@ class SalesAnalyst
   end
 
   def golden_items
-    @item_repo.all.find_all do |item|
-      item.unit_price >= (@item_repo.item_price_standard_deviation * 2) + @item_repo.average_item_price
+    @items.all.find_all do |item|
+      item.unit_price >= (@items.item_price_standard_deviation * 2) + @items.average_item_price
     end
   end
 

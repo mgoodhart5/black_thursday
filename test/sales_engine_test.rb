@@ -19,7 +19,7 @@ class SalesEngineTest < MiniTest::Test
       :merchants => "./test/merchant_sample.csv",
     })
 
-    assert_instance_of ItemRepo, se.items_repo
+    assert_instance_of ItemRepo, se.items
   end
 
   def test_it_can_return_an_instance_of_merchant_repo_with_items
@@ -28,6 +28,6 @@ class SalesEngineTest < MiniTest::Test
       :merchants => "./test/merchant_sample.csv",
     })
 
-    assert_instance_of MerchantRepo, se.merchants_repo
+    assert_instance_of MerchantRepo, se.merchants
   end
 end
