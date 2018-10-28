@@ -63,6 +63,22 @@ class SalesAnalyst
     price_sum / BigDecimal.new(merchant_items.length)
   end
 
+  def average_average_price_per_merchant
+    merchant_averages = @merchant_repo.all.map do |merchant|
+      merchant_items = @item_repo.find_all_by_merchant_id(merchant.id)
+      price_sum = merchant_items.map do |item|
+        item.unit_price
+      end.reduce(:+)
+      price_sum / BigDecimal.new(merchant_items.length)
+    end
+    merchant_average_sum = merchant_averages.inject(BigDecimal.new(0)) do |sum, number|
+      sum + number
+    end
+    merchant_average_sum / BigDecimal.new(merchant_averages.length)
+  end
+
+
+
 
 
 
