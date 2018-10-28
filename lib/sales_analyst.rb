@@ -44,8 +44,15 @@ class SalesAnalyst
     end.each do |number|
       sum_2 += number
     end
-    final = sum_2 / ((counted_items.count.to_f) -1)
+    final = sum_2 / ((counted_items.count.to_f) - 1)
     final
+  end
+
+  def merchants_with_high_item_count
+    @merchant_repo.all.find_all do |merchant|
+      merchant_items = @item_repo.find_all_by_merchant_id(merchant.id)
+      merchant_items.length >= (average_items_per_merchant + average_items_per_merchant_standard_deviation)
+    end
   end
 
 
