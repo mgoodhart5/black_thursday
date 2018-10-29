@@ -8,7 +8,7 @@ class ItemRepoTest < MiniTest::Test
       :items     => "./test/item_sample.csv",
       :merchants => "./test/merchant_sample.csv",
     })
-    @ir = @sales_engine.items_repo
+    @ir = @sales_engine.items
   end
 
   def test_it_exists

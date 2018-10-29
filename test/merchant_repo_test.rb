@@ -9,7 +9,7 @@ class MerchantRepoTest < MiniTest::Test
       :items     => "./test/item_sample.csv",
       :merchants => "./test/merchant_sample.csv",
     })
-    @mr = @sales_engine.merchants_repo
+    @mr = @sales_engine.merchants
   end
 
   def test_it_exists

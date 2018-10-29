@@ -5,8 +5,11 @@ require_relative '../lib/sales_engine'
 class ItemRepo
   attr_reader :all
 
+
   def initialize(item_data)
     @all = item_data
+    @first_step = first_step
+    @sum = sum
   end
 
   def find_by_id(id)
@@ -83,16 +86,23 @@ class ItemRepo
     item_price_sum / BigDecimal.new(@all.length)
   end
 
-  def item_price_standard_deviation
-    sum = 0
-    first_step = @all.map do |item|
+  def first_step
+    @first_step = @all.map do |item|
       answer = (item.unit_price - average_item_price)
       answer * answer
     end
-    first_step.each do |number|
-      sum += number
+  end
+
+  def sum
+    answer = 0
+    @first_step.each do |number|
+      answer += number
     end
-    final_step = sum / ((@all.length.to_f) - 1)
+    answer
+  end
+
+  def item_price_standard_deviation
+    final_step = @sum / ((@all.length.to_f) - 1)
     Math.sqrt(final_step.to_f).round(2)
   end
 

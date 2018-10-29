@@ -7,7 +7,7 @@ require 'mathn'
 require 'CSV'
 
 class SalesAnalyst
- attr_reader :merchant_count_array, :mean, :next
+ attr_reader :merchant_count_array, :mean, :next, :average_items_per_merchant
   def initialize(items, merchants)
     @items = items
     @merchants = merchants
@@ -17,7 +17,6 @@ class SalesAnalyst
     @next = next_step
     @average_items_per_merchant = average_items_per_merchant
     @average_items_per_merchant_standard_deviation = average_items_per_merchant_standard_deviation
-
   end
 
   def average_items_per_merchant
@@ -40,7 +39,6 @@ class SalesAnalyst
       sum += number
     end
     sum / @merchants.all.count
-
   end
 
   def next_step
@@ -64,10 +62,13 @@ class SalesAnalyst
 
   def average_item_price_for_merchant(id)
     merchant_items = @items.find_all_by_merchant_id(id)
-    price_sum = merchant_items.map do |item|
-      item.unit_price
-    end.reduce(:+)
-    price_sum / BigDecimal.new(merchant_items.length)
+    accumulator = BigDecimal.new(0)
+    merchant_items.each do |item|
+      accumulator += item.unit_price
+    end
+    number = (accumulator / BigDecimal.new(merchant_items.length))
+    answer = BigDecimal.new(number, 4)
+    answer.round(2)
   end
 
   def average_average_price_per_merchant
@@ -81,7 +82,8 @@ class SalesAnalyst
     merchant_average_sum = merchant_averages.inject(BigDecimal.new(0)) do |sum, number|
       sum + number
     end
-    merchant_average_sum / BigDecimal.new(merchant_averages.length)
+    answer = merchant_average_sum / BigDecimal.new(merchant_averages.length)
+    answer.round(2) 
   end
 
   def golden_items
