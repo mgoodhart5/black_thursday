@@ -9,8 +9,7 @@ class InvoiceRepo
   end
 
   def find_by_id(id)
-    @all.find_all do |invoice|
-      binding.pry
+    @all.find do |invoice|
       invoice.id == id
     end
   end
