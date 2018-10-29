@@ -7,10 +7,17 @@ require 'mathn'
 require 'CSV'
 
 class SalesAnalyst
-
+ attr_reader :merchant_count_array, :mean, :next
   def initialize(items, merchants)
     @items = items
     @merchants = merchants
+    @merchant_count_array = counted_items
+    @mean = mean_of_merchant_items
+    @average_price_per_merchant = average_average_price_per_merchant
+    @next = next_step
+    @average_items_per_merchant = average_items_per_merchant
+    @average_items_per_merchant_standard_deviation = average_items_per_merchant_standard_deviation
+
   end
 
   def average_items_per_merchant
@@ -18,42 +25,40 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    Math.sqrt(next_step).round(2)
+    Math.sqrt(@next).round(2)
   end
 
   def counted_items
-    # rename this method cause WHAT?
-    count = []
-    @merchants.all.each do |merchant|
-      count << @items.find_all_by_merchant_id(merchant.id).count
+    @merchants.all.map do |merchant|
+       @items.find_all_by_merchant_id(merchant.id).count
     end
-    count
   end
 
   def mean_of_merchant_items
     sum = 0
-    counted_items.each do |number|
+    @merchant_count_array.each do |number|
       sum += number
     end
     sum / @merchants.all.count
+
   end
 
   def next_step
     # also rename this method
     sum_2 = 0
-    counted_items.map do |number|
-      answer = (number - mean_of_merchant_items)
+    @merchant_count_array.map do |number|
+      answer = (number - @mean)
       answer * answer
     end.each do |number|
       sum_2 += number
     end
-    sum_2 / ((counted_items.count.to_f) - 1)
+    sum_2 / ((@merchant_count_array.count.to_f) - 1)
   end
 
   def merchants_with_high_item_count
-    @merchants.all.find_all do |merchant|
+      @merchants.all.find_all do |merchant|
       merchant_items = @items.find_all_by_merchant_id(merchant.id)
-      merchant_items.length >= (average_items_per_merchant + average_items_per_merchant_standard_deviation)
+      merchant_items.length >= (@average_items_per_merchant + @average_items_per_merchant_standard_deviation)
     end
   end
 
