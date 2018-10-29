@@ -30,21 +30,21 @@ class SalesAnalystTest < Minitest::Test
 
   def test_that_an_array_of_counted_item_numbers_is_returned
 
-
-    assert_equal [1, 3, 2], @sa.counted_items
+    @sa.counted_items
+    assert_equal [1, 3, 2], @sa.merchant_count_array
   end
 
 
   def test_that_it_can_count_items_for_each_merchant_and_add_then_return_mean
 
-
-    assert_equal 2, @sa.mean_of_merchant_items
+   @sa.mean_of_merchant_items
+    assert_equal 2, @sa.mean
   end
 
   def test_the_next_step_of_standard_deviation
 
-
-    assert_equal 1.0, @sa.next_step
+    @sa.next_step
+    assert_equal 1.0, @sa.next
   end
 
   def test_that_it_can_calculate_average_items_per_merchant_standard_deviation
@@ -73,7 +73,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_that_it_can_find_all_golden_items
-  
+
 
     assert_equal [], @sa.golden_items
   end
