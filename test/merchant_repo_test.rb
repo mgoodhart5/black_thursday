@@ -8,6 +8,7 @@ class MerchantRepoTest < MiniTest::Test
     @sales_engine = SalesEngine.from_csv({
       :items     => "./test/item_sample.csv",
       :merchants => "./test/merchant_sample.csv",
+      :invoices => "./test/invoice_sample.csv"
     })
     @mr = @sales_engine.merchants
   end

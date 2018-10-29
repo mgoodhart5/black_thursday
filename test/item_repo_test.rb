@@ -7,6 +7,7 @@ class ItemRepoTest < MiniTest::Test
     @sales_engine = SalesEngine.from_csv({
       :items     => "./test/item_sample.csv",
       :merchants => "./test/merchant_sample.csv",
+      :invoices => "./test/invoice_sample.csv"
     })
     @ir = @sales_engine.items
   end
