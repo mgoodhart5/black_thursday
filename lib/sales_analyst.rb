@@ -68,6 +68,11 @@ class SalesAnalyst
       item.unit_price
     end.reduce(:+)
     price_sum / BigDecimal.new(merchant_items.length)
+    binding.pry
+# I think that here, the problem has everything to do with the Big Decimal
+#because a big decmail has to take two arguments- the number and the length
+#i think once we can do that, then this method and the one below will work
+# researching BD more; also we have a big decimal converter in item...
   end
 
   def average_average_price_per_merchant
