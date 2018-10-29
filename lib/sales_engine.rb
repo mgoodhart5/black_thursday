@@ -16,9 +16,9 @@ class SalesEngine
     @merchants = MerchantRepo.new(create_merchants(@merchant_data))
     @item_data = CSV.open(csv_files[:items], headers: true, header_converters: :symbol)
     @items = ItemRepo.new(create_items(@item_data))
-    @analyst = SalesAnalyst.new(@items, @merchants)
     @invoice_data = CSV.open(csv_files[:invoices], headers: true, header_converters: :symbol)
     @invoices = InvoiceRepo.new(create_invoices(@invoice_data))
+    @analyst = SalesAnalyst.new(@items, @merchants, @invoices)
   end
 
 

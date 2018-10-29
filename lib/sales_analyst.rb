@@ -3,20 +3,25 @@ require_relative '../lib/item_repo'
 require_relative '../lib/sales_engine'
 require_relative '../lib/item'
 require_relative '../lib/merchant'
+require_relative '../lib/invoice'
+require_relative '../lib/invoice_repo'
 require 'mathn'
 require 'CSV'
 
 class SalesAnalyst
  attr_reader :merchant_count_array, :mean, :next, :average_items_per_merchant
-  def initialize(items, merchants)
+  def initialize(items, merchants, invoices)
+    @invoices = invoices
     @items = items
     @merchants = merchants
     @merchant_count_array = counted_items
     @mean = mean_of_merchant_items
+    # binding.pry
     @average_price_per_merchant = average_average_price_per_merchant
     @next = next_step
     @average_items_per_merchant = average_items_per_merchant
     @average_items_per_merchant_standard_deviation = average_items_per_merchant_standard_deviation
+    @average_invoices_per_merchant = average_invoices_per_merchant
   end
 
   def average_items_per_merchant
@@ -27,7 +32,7 @@ class SalesAnalyst
     Math.sqrt(@next).round(2)
   end
 
-  def counted_items
+  def counted_items#(count)
     @merchants.all.map do |merchant|
        @items.find_all_by_merchant_id(merchant.id).count
     end
@@ -83,7 +88,7 @@ class SalesAnalyst
       sum + number
     end
     answer = merchant_average_sum / BigDecimal.new(merchant_averages.length)
-    answer.round(2) 
+    answer.round(2)
   end
 
   def golden_items
@@ -92,8 +97,9 @@ class SalesAnalyst
     end
   end
 
-
-
+  def average_invoices_per_merchant
+    (@invoices.all.count.to_f / @merchants.all.count).round(2)
+  end
 
 
 
