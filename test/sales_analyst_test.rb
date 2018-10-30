@@ -102,4 +102,14 @@ class SalesAnalystTest < Minitest::Test
     assert_equal [5, 5, 7, 1, 2, 6, 1], @sa.numbered_days
   end
 
+  def test_we_can_count_occurence_of_days
+
+    assert_equal [2, 1, 2, 1, 1], @sa.days_occurence
+  end
+
+  def test_that_we_have_a_mean_of_days_occurence
+
+    assert_equal 1, @sa.mean_of_days_occurences
+  end
+
 end

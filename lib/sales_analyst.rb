@@ -159,6 +159,26 @@ class SalesAnalyst
     days_array
   end
 
-  
+  def days_occurence
+    counts = Hash.new(0)
+    numbered_days.each do |day|
+      counts[day] += 1
+    end
+    counts.values
+  end
+
+  def mean_of_days_occurences
+    sum = 0
+    days_occurence.each do |number|
+      sum += number
+    end
+    sum / 7
+  end
+
+
+
+
+
+
 
 end
