@@ -101,6 +101,4 @@ class SalesAnalyst
     (@invoices.all.count.to_f / @merchants.all.count).round(2)
   end
 
-
-
 end

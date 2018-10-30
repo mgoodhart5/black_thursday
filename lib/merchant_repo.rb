@@ -1,24 +1,14 @@
-require 'CSV'
 require_relative '../lib/merchant'
 require_relative '../lib/sales_engine'
+require_relative '../lib/method_module'
 
 class MerchantRepo
+  include FindMethods
+
    attr_reader :all
 
   def initialize(merchant_data)
     @all = merchant_data
-  end
-
-  def find_by_id(id)
-    @all.find do |merchant|
-      merchant.id == id
-    end
-  end
-
-  def find_by_name(name)
-    @all.find do |merchant|
-      merchant.name.upcase == name.upcase
-    end
   end
 
   def find_all_by_name(name)
@@ -27,12 +17,12 @@ class MerchantRepo
     end
   end
 
-  def find_highest_id
-    current_highest = @all.max_by do |merchant|
-      merchant.id
-    end
-    current_highest.id.to_i
-  end
+  # def find_highest_id
+  #   current_highest = @all.max_by do |merchant|
+  #     merchant.id
+  #   end
+  #   current_highest.id.to_i
+  # end
 
   def create(attributes)
    new_id = find_highest_id + 1
@@ -47,12 +37,6 @@ class MerchantRepo
        merchant.name = attributes[:name] if attributes[:name]
     end
     merchant
-  end
-
-  def delete(id)
-    @all.delete_if do |merchant|
-      merchant.id == id
-    end
   end
 
 end
