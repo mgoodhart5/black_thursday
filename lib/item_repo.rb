@@ -1,3 +1,4 @@
+require 'CSV'
 require_relative '../lib/item'
 require_relative '../lib/sales_engine'
 require_relative '../lib/method_module'
