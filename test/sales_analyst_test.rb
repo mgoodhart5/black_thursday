@@ -87,7 +87,19 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.58, @sa.average_invoices_per_merchant_standard_deviation
   end
 
-  def test_it_can_top_merchants_by_invoice_count
+  def test_it_can_find_top_merchants_by_invoice_count
+
+    assert_instance_of Array, @sa.top_merchants_by_invoice_count
+  end
+
+  def test_it_can_find_low_merchants_by_invoice_count
+
+    assert_instance_of Array, @sa.bottom_merchants_by_invoice_count
+  end
+
+  def test_that_numerical_dates_can_be_turned_into_corresponding_numbers
+
+    assert_equal [5, 5, 7, 1, 2, 6, 1], @sa.numbered_days
   end
 
 end

@@ -6,6 +6,7 @@ require_relative '../lib/merchant'
 require_relative '../lib/invoice'
 require_relative '../lib/invoice_repo'
 require 'mathn'
+require 'date'
 require 'CSV'
 
 class SalesAnalyst
@@ -24,6 +25,7 @@ class SalesAnalyst
     @merchant_invoices_count_array = counted_invoices
     @invoice_mean = mean_of_merchant_invoices
     @next_invoices = next_step_invoices
+    @invoice_standard_dev = average_invoices_per_merchant_standard_deviation
   end
 
   def average_items_per_merchant
@@ -118,7 +120,7 @@ class SalesAnalyst
     @merchant_invoices_count_array.each do |number|
       sum += number
     end
-    sum / @merchants.all.count
+    sum.to_f / @merchants.all.count
   end
 
   def next_step_invoices
@@ -133,5 +135,30 @@ class SalesAnalyst
     sum_2 / ((@merchant_invoices_count_array.count.to_f) - 1)
   end
 
+  def top_merchants_by_invoice_count
+    @merchants.all.find_all do |merchant|
+      merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
+      (merchant_invoices.count) < ((@invoice_standard_dev * 2) + @invoice_mean)
+    end
+  end
+
+  def bottom_merchants_by_invoice_count
+    @merchants.all.find_all do |merchant|
+      merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
+      (merchant_invoices.count) < ((@invoice_standard_dev * 2) + @invoice_mean)
+    end
+  end
+
+  def numbered_days
+    days = @invoices.all.map do |invoice|
+      invoice.created_at
+    end
+    days_array = days.map do |day|
+      Date.parse(day).cwday
+    end
+    days_array
+  end
+
+  
 
 end
