@@ -14,14 +14,16 @@ class SalesAnalyst
     @invoices = invoices
     @items = items
     @merchants = merchants
-    @merchant_count_array = counted_items
-    @mean = mean_of_merchant_items
-    # binding.pry
+    @merchant_items_count_array = counted_items
+    @item_mean = mean_of_merchant_items
     @average_price_per_merchant = average_average_price_per_merchant
-    @next = next_step
+    @next_items = next_step_items
     @average_items_per_merchant = average_items_per_merchant
     @average_items_per_merchant_standard_deviation = average_items_per_merchant_standard_deviation
     @average_invoices_per_merchant = average_invoices_per_merchant
+    @merchant_invoices_count_array = counted_invoices
+    @invoice_mean = mean_of_merchant_invoices
+    @next_invoices = next_step_invoices
   end
 
   def average_items_per_merchant
@@ -29,7 +31,7 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    Math.sqrt(@next).round(2)
+    Math.sqrt(@next_items).round(2)
   end
 
   def counted_items#(count)
@@ -40,22 +42,22 @@ class SalesAnalyst
 
   def mean_of_merchant_items
     sum = 0
-    @merchant_count_array.each do |number|
+    @merchant_items_count_array.each do |number|
       sum += number
     end
     sum / @merchants.all.count
   end
 
-  def next_step
+  def next_step_items
     # also rename this method
     sum_2 = 0
-    @merchant_count_array.map do |number|
-      answer = (number - @mean)
+    @merchant_items_count_array.map do |number|
+      answer = (number - @item_mean)
       answer * answer
     end.each do |number|
       sum_2 += number
     end
-    sum_2 / ((@merchant_count_array.count.to_f) - 1)
+    sum_2 / ((@merchant_items_count_array.count.to_f) - 1)
   end
 
   def merchants_with_high_item_count
@@ -100,5 +102,36 @@ class SalesAnalyst
   def average_invoices_per_merchant
     (@invoices.all.count.to_f / @merchants.all.count).round(2)
   end
+
+  def average_invoices_per_merchant_standard_deviation
+      Math.sqrt(@next_invoices).round(2)
+  end
+
+  def counted_invoices#(count)
+    @merchants.all.map do |merchant|
+       @invoices.find_all_by_merchant_id(merchant.id).count
+    end
+  end
+
+  def mean_of_merchant_invoices
+    sum = 0
+    @merchant_invoices_count_array.each do |number|
+      sum += number
+    end
+    sum / @merchants.all.count
+  end
+
+  def next_step_invoices
+    # also rename this method
+    sum_2 = 0
+    @merchant_invoices_count_array.map do |number|
+      answer = (number - @invoice_mean)
+      answer * answer
+    end.each do |number|
+      sum_2 += number
+    end
+    sum_2 / ((@merchant_invoices_count_array.count.to_f) - 1)
+  end
+
 
 end
