@@ -1,3 +1,4 @@
+require 'CSV'
 require_relative '../lib/merchant'
 require_relative '../lib/sales_engine'
 require_relative '../lib/method_module'
@@ -16,13 +17,6 @@ class MerchantRepo
       merchant.name.downcase.include?(name.downcase)
     end
   end
-
-  # def find_highest_id
-  #   current_highest = @all.max_by do |merchant|
-  #     merchant.id
-  #   end
-  #   current_highest.id.to_i
-  # end
 
   def create(attributes)
    new_id = find_highest_id + 1

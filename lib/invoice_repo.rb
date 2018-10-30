@@ -30,13 +30,6 @@ class InvoiceRepo
     end
   end
 
-  # def find_highest_id
-  #   current_highest = @all.max_by do |invoice|
-  #     invoice.id
-  #   end
-  #   current_highest.id.to_i
-  # end
-
   def create(attributes)
    new_id = find_highest_id + 1
    attributes[:id] = new_id

@@ -1,8 +1,5 @@
 module FindMethods
 
-  def inspect
-  end
-
   def find_by_id(id)
     @all.find do |item|
       item.id == id
