@@ -1,17 +1,15 @@
 require 'CSV'
 require_relative '../lib/invoice'
 require_relative '../lib/sales_engine'
+require_relative '../lib/method_module'
 
 class InvoiceRepo
+  include FindMethods
+
   attr_reader :all
+
   def initialize(invoice_data)
     @all = invoice_data
-  end
-
-  def find_by_id(id)
-    @all.find do |invoice|
-      invoice.id == id
-    end
   end
 
   def find_all_by_customer_id(customer_id)
@@ -32,12 +30,12 @@ class InvoiceRepo
     end
   end
 
-  def find_highest_id
-    current_highest = @all.max_by do |invoice|
-      invoice.id
-    end
-    current_highest.id.to_i
-  end
+  # def find_highest_id
+  #   current_highest = @all.max_by do |invoice|
+  #     invoice.id
+  #   end
+  #   current_highest.id.to_i
+  # end
 
   def create(attributes)
    new_id = find_highest_id + 1
@@ -53,12 +51,6 @@ class InvoiceRepo
      single_invoice.updated_at = Time.now
    end
    single_invoice
-  end
-
-  def delete(id)
-    @all.delete_if do |invoice|
-      invoice.id == id
-    end
   end
 
 end
