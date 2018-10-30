@@ -1,10 +1,9 @@
-require 'CSV'
+# require 'CSV'
 require_relative '../lib/item'
 require_relative '../lib/sales_engine'
 
 class ItemRepo
   attr_reader :all
-
 
   def initialize(item_data)
     @all = item_data
