@@ -30,8 +30,8 @@ class InvoiceRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_merchant_id
-    found = @invoices.find_all_by_merchant_id(12335955)
-    assert_equal 1, found.count
+    found = @invoices.find_all_by_merchant_id(12334113)
+    assert_equal 2, found.count
   end
 
   def test_it_can_find_all_by_status
