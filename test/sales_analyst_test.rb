@@ -128,4 +128,10 @@ class SalesAnalystTest < Minitest::Test
     #this works, I tried it with a weird number
   end
 
+  def test_it_can_check_percentage_of_invoice_status
+
+    assert_equal 42.86, @sa.invoice_status(:pending)
+    assert_equal 57.14, @sa.invoice_status(:shipped)
+  end
+
 end

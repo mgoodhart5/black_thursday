@@ -209,6 +209,16 @@ class SalesAnalyst
     end
   end
 
+  def invoice_status(status)
+    found = @invoices.all.find_all do |invoice|
+      invoice.status == status.to_s
+    end
+    percentage = (found.count.to_f / @invoices.all.count) * 100
+    percentage.round(2)
+  end
+
+
+
 
 
 end
