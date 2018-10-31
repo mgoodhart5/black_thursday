@@ -6,7 +6,7 @@ require_relative '../lib/merchant'
 require_relative '../lib/invoice'
 require_relative '../lib/invoice_repo'
 require 'mathn'
-require 'date'
+require 'Date'
 require 'CSV'
 
 class SalesAnalyst
@@ -138,14 +138,14 @@ class SalesAnalyst
   def top_merchants_by_invoice_count
     @merchants.all.find_all do |merchant|
       merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
-      (merchant_invoices.count) < ((@invoice_standard_dev * 2) + @invoice_mean)
+      merchant_invoices.count > (@invoice_standard_dev * 2) + @invoice_mean
     end
   end
 
   def bottom_merchants_by_invoice_count
     @merchants.all.find_all do |merchant|
       merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
-      (merchant_invoices.count) < ((@invoice_standard_dev * 2) + @invoice_mean)
+      merchant_invoices.count < @invoice_mean - (@invoice_standard_dev * 2)
     end
   end
 
@@ -154,9 +154,10 @@ class SalesAnalyst
       invoice.created_at
     end
     days_array = days.map do |day|
-      Date.parse(day).cwday
+      day.wday.next
     end
-    days_array
+     days_array
+     # require 'pry';binding.pry
   end
 
   def days_occurence
@@ -189,19 +190,20 @@ class SalesAnalyst
   def days_standard_dev
     # also rename this method
     sum_2 = 0
-    numbered_days.map do |day|
-      answer = (day - mean_of_days_occurences)
+    days_occurence.map do |day, times|
+      answer = (times - mean_of_days_occurences)
       answer * answer
     end.each do |number|
       sum_2 += number
     end
-    answer = sum_2 / ((numbered_days.count.to_f) - 1)
+    answer = (sum_2 / mean_of_days_occurences) - 1
     deviation = Math.sqrt(answer).round(2)
     deviation
   end
 
   def top_days_by_invoice_count
-    top_days = days_occurence.select do |key, value|
+    top_days = days_occurence.find_all do |key, value|
+      # require 'pry';binding.pry
       value >= (days_standard_dev + mean_of_days_occurences)
     end
     top_days.map do |key, value|
@@ -216,6 +218,8 @@ class SalesAnalyst
     percentage = (found.count.to_f / @invoices.all.count) * 100
     percentage.round(2)
   end
+
+
 
 
 
