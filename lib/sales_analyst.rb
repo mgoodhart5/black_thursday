@@ -164,20 +164,50 @@ class SalesAnalyst
     numbered_days.each do |day|
       counts[day] += 1
     end
-    counts.values
+    counts
   end
 
   def mean_of_days_occurences
     sum = 0
-    days_occurence.each do |number|
-      sum += number
+    days_occurence.each do |date, occurence|
+      sum += occurence
     end
-    sum / 7
+    answer = (sum.to_f / 7).round(2)
+    answer
   end
 
+  def days
+    { 1 => "Monday",
+      2 => "Tuesday",
+      3 => "Wednesday",
+      4 => "Thursday",
+      5 => "Friday",
+      6 => "Saturday",
+      7 => "Sunday" }
+  end
 
+  def days_standard_dev
+    # also rename this method
+    sum_2 = 0
+    numbered_days.map do |day|
+      answer = (day - mean_of_days_occurences)
+      answer * answer
+    end.each do |number|
+      sum_2 += number
+    end
+    answer = sum_2 / ((numbered_days.count.to_f) - 1)
+    deviation = Math.sqrt(answer).round(2)
+    deviation
+  end
 
-
+  def top_days_by_invoice_count
+    top_days = days_occurence.select do |key, value|
+      value >= (days_standard_dev + mean_of_days_occurences)
+    end
+    top_days.map do |key, value|
+      days[key]
+    end
+  end
 
 
 

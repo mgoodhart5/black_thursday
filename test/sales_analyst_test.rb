@@ -104,12 +104,28 @@ class SalesAnalystTest < Minitest::Test
 
   def test_we_can_count_occurence_of_days
 
-    assert_equal [2, 1, 2, 1, 1], @sa.days_occurence
+    assert_equal ({5=>2, 7=>1, 1=>2, 2=>1, 6=>1}), @sa.days_occurence
   end
 
   def test_that_we_have_a_mean_of_days_occurence
 
     assert_equal 1, @sa.mean_of_days_occurences
+  end
+
+  def test_that_we_have_a_hash_of_days
+
+    assert_equal "Monday", @sa.days[1]
+  end
+
+  def test_that_we_can_find_standard_deviation_for_days
+
+    assert_equal 3.96, @sa.days_standard_dev
+  end
+
+  def test_that_we_can_find_top_days_by_invoice_count
+
+    assert_equal ([]), @sa.top_days_by_invoice_count
+    #this works, I tried it with a weird number
   end
 
 end
