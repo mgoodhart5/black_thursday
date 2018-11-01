@@ -11,7 +11,6 @@ class Item
                 :updated_at,
                 :unit_price
 
-
   def initialize(item_information)
     @id = item_information[:id].to_i
     @name = item_information[:name]

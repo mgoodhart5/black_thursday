@@ -1,10 +1,10 @@
 require_relative '../lib/merchant_repo'
-require_relative '../lib/item_repo'
-require_relative '../lib/sales_analyst'
-require_relative '../lib/item'
 require_relative '../lib/merchant'
+require_relative '../lib/item_repo'
+require_relative '../lib/item'
 require_relative '../lib/invoice_repo'
 require_relative '../lib/invoice'
+require_relative '../lib/sales_analyst'
 require 'CSV'
 
 class SalesEngine
@@ -20,7 +20,6 @@ class SalesEngine
     @invoices = InvoiceRepo.new(create_invoices(@invoice_data))
     @analyst = SalesAnalyst.new(@items, @merchants, @invoices)
   end
-
 
   def self.from_csv(csv_files)
     self.new(csv_files)
