@@ -2,6 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/merchant'
 
 class MerchantTest < Minitest::Test
+  
   def test_it_exists
     m1 = Merchant.new({:id => 5, :name => "Turing School"})
 

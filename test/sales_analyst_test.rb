@@ -17,12 +17,10 @@ class SalesAnalystTest < Minitest::Test
 
   def test_that_it_exists
 
-
     assert_instance_of SalesAnalyst, @sa
   end
 
   def test_average_items_per_merchant
-
 
     assert_equal 2.0, @sa.average_items_per_merchant
   end
@@ -30,31 +28,26 @@ class SalesAnalystTest < Minitest::Test
 
   def test_that_an_array_of_counted_item_numbers_is_returned
 
-
     assert_equal [1, 3, 2], @sa.counted_items
   end
 
 
   def test_that_it_can_count_items_for_each_merchant_and_add_then_return_mean
 
-
     assert_equal 2, @sa.mean_of_merchant_items
   end
 
   def test_the_next_step_of_standard_deviation
-
 
     assert_equal 1.0, @sa.items_squared
   end
 
   def test_that_it_can_calculate_average_items_per_merchant_standard_deviation
 
-
     assert_equal 1.0, @sa.average_items_per_merchant_standard_deviation
   end
 
   def test_for_merchants_with_high_item_count
-
 
     assert_equal 1, @sa.merchants_with_high_item_count.length
     assert_equal 12334112, @sa.merchants_with_high_item_count.first.id
@@ -62,12 +55,10 @@ class SalesAnalystTest < Minitest::Test
 
   def test_that_it_can_calculate_average_price_per_merchant
 
-
    assert_equal BigDecimal.new(30), @sa.average_item_price_for_merchant(12334112)
   end
 
   def test_that_it_returns_average_average_price_per_merchant
-
 
     assert_equal BigDecimal.new(25), @sa.average_average_price_per_merchant
   end

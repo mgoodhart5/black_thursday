@@ -6,7 +6,6 @@ class Invoice
               :merchant_id,
               :created_at
 
-
   attr_accessor :status, :updated_at
 
   def initialize(invoice_info)
