@@ -1,12 +1,11 @@
 require_relative '../lib/merchant_repo'
 require_relative '../lib/item_repo'
 require_relative '../lib/sales_engine'
-require_relative '../lib/item'
-require_relative '../lib/merchant'
-require_relative '../lib/invoice'
+# require_relative '../lib/item'
+# require_relative '../lib/merchant'
+# require_relative '../lib/invoice'
 require_relative '../lib/invoice_repo'
 require 'mathn'
-require 'Date'
 require 'CSV'
 
 class SalesAnalyst
@@ -208,11 +207,5 @@ class SalesAnalyst
     percentage = (found.count.to_f / @invoices.all.count) * 100
     percentage.round(2)
   end
-
-
-
-
-
-
 
 end

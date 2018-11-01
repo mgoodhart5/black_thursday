@@ -34,7 +34,7 @@ class InvoiceRepo
    new_id = find_highest_id + 1
    attributes[:id] = new_id
    @all << new_invoice = Invoice.new(attributes)
-   new_invoice # is this supposed to have the newest times ie. created_at
+   new_invoice 
   end
 
   def update(id, attributes)
