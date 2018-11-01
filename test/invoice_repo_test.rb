@@ -35,7 +35,7 @@ class InvoiceRepoTest < MiniTest::Test
   end
 
   def test_it_can_find_all_by_status
-    found = @invoices.find_all_by_status("pending")
+    found = @invoices.find_all_by_status(:pending)
     assert_equal 3, found.count
   end
 

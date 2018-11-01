@@ -10,22 +10,15 @@ require 'Date'
 require 'CSV'
 
 class SalesAnalyst
- attr_reader :merchant_count_array, :mean, :next, :average_items_per_merchant
+
   def initialize(items, merchants, invoices)
     @invoices = invoices
     @items = items
     @merchants = merchants
-    @merchant_items_count_array = counted_items
     @item_mean = mean_of_merchant_items
-    @average_price_per_merchant = average_average_price_per_merchant
-    @next_items = next_step_items
-    @average_items_per_merchant = average_items_per_merchant
-    @average_items_per_merchant_standard_deviation = average_items_per_merchant_standard_deviation
-    @average_invoices_per_merchant = average_invoices_per_merchant
-    @merchant_invoices_count_array = counted_invoices
+    @items_squared = items_squared
     @invoice_mean = mean_of_merchant_invoices
-    @next_invoices = next_step_invoices
-    @invoice_standard_dev = average_invoices_per_merchant_standard_deviation
+    @invoices_squared = invoices_squared
   end
 
   def average_items_per_merchant
@@ -33,39 +26,39 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    Math.sqrt(@next_items).round(2)
+    Math.sqrt(@items_squared).round(2)
   end
 
-  def counted_items#(count)
-    @merchants.all.map do |merchant|
+  def counted_items
+    items_count = @merchants.all.map do |merchant|
        @items.find_all_by_merchant_id(merchant.id).count
     end
+    items_count
   end
 
   def mean_of_merchant_items
     sum = 0
-    @merchant_items_count_array.each do |number|
+    counted_items.each do |number|
       sum += number
     end
     sum / @merchants.all.count
   end
 
-  def next_step_items
-    # also rename this method
+  def items_squared
     sum_2 = 0
-    @merchant_items_count_array.map do |number|
+    counted_items.map do |number|
       answer = (number - @item_mean)
       answer * answer
     end.each do |number|
       sum_2 += number
     end
-    sum_2 / ((@merchant_items_count_array.count.to_f) - 1)
+    sum_2 / ((counted_items.count.to_f) - 1)
   end
 
   def merchants_with_high_item_count
       @merchants.all.find_all do |merchant|
       merchant_items = @items.find_all_by_merchant_id(merchant.id)
-      merchant_items.length >= (@average_items_per_merchant + @average_items_per_merchant_standard_deviation)
+      merchant_items.length >= (average_items_per_merchant + average_items_per_merchant_standard_deviation)
     end
   end
 
@@ -106,46 +99,46 @@ class SalesAnalyst
   end
 
   def average_invoices_per_merchant_standard_deviation
-      Math.sqrt(@next_invoices).round(2)
+      Math.sqrt(@invoices_squared).round(2)
   end
 
-  def counted_invoices#(count)
-    @merchants.all.map do |merchant|
+  def counted_invoices
+    invoice_count = @merchants.all.map do |merchant|
        @invoices.find_all_by_merchant_id(merchant.id).count
     end
+    invoice_count
   end
 
   def mean_of_merchant_invoices
     sum = 0
-    @merchant_invoices_count_array.each do |number|
+    counted_invoices.each do |number|
       sum += number
     end
     sum.to_f / @merchants.all.count
   end
 
-  def next_step_invoices
-    # also rename this method
+  def invoices_squared
     sum_2 = 0
-    @merchant_invoices_count_array.map do |number|
+    counted_invoices.map do |number|
       answer = (number - @invoice_mean)
       answer * answer
     end.each do |number|
       sum_2 += number
     end
-    sum_2 / ((@merchant_invoices_count_array.count.to_f) - 1)
+    sum_2 / ((counted_invoices.count.to_f) - 1)
   end
 
   def top_merchants_by_invoice_count
     @merchants.all.find_all do |merchant|
       merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
-      merchant_invoices.count > (@invoice_standard_dev * 2) + @invoice_mean
+      merchant_invoices.count > (average_invoices_per_merchant_standard_deviation * 2) + @invoice_mean
     end
   end
 
   def bottom_merchants_by_invoice_count
     @merchants.all.find_all do |merchant|
       merchant_invoices = @invoices.find_all_by_merchant_id(merchant.id)
-      merchant_invoices.count < @invoice_mean - (@invoice_standard_dev * 2)
+      merchant_invoices.count < @invoice_mean - (average_invoices_per_merchant_standard_deviation * 2)
     end
   end
 
@@ -154,10 +147,9 @@ class SalesAnalyst
       invoice.created_at
     end
     days_array = days.map do |day|
-      day.wday.next
+      day.wday
     end
      days_array
-     # require 'pry';binding.pry
   end
 
   def days_occurence
@@ -188,7 +180,6 @@ class SalesAnalyst
   end
 
   def days_standard_dev
-    # also rename this method
     sum_2 = 0
     days_occurence.map do |day, times|
       answer = (times - mean_of_days_occurences)
@@ -196,14 +187,13 @@ class SalesAnalyst
     end.each do |number|
       sum_2 += number
     end
-    answer = (sum_2 / mean_of_days_occurences) - 1
+    answer = sum_2 / (days_occurence.keys.count - 1)
     deviation = Math.sqrt(answer).round(2)
     deviation
   end
 
   def top_days_by_invoice_count
     top_days = days_occurence.find_all do |key, value|
-      # require 'pry';binding.pry
       value >= (days_standard_dev + mean_of_days_occurences)
     end
     top_days.map do |key, value|
@@ -213,7 +203,7 @@ class SalesAnalyst
 
   def invoice_status(status)
     found = @invoices.all.find_all do |invoice|
-      invoice.status == status.to_s
+      invoice.status == status
     end
     percentage = (found.count.to_f / @invoices.all.count) * 100
     percentage.round(2)
